@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumen Kafe — Sipariş & Adisyon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="mesh"></div>
+  </div>
+
+  <!-- ========== LANDING ========== -->
+  <section id="screen-landing" class="screen screen-landing is-active" aria-label="Ana menü">
+    <div class="hero">
+      <div class="hero-media">
+        <p class="brand brand-on-media">Lumen</p>
+        <div class="hero-photo" aria-hidden="true">
+          <div class="latte-art">
+            <div class="cup-body">
+              <div class="cup-rim"></div>
+              <div class="foam">
+                <span class="swirl s1"></span>
+                <span class="swirl s2"></span>
+                <span class="swirl s3"></span>
+              </div>
+              <div class="cup-handle"></div>
+            </div>
+            <div class="cup-shadow"></div>
+            <div class="steam-line a"></div>
+            <div class="steam-line b"></div>
+            <div class="steam-line c"></div>
+          </div>
+          <div class="hero-ring"></div>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <h1>Masadan kasaya, sipariş akışı.</h1>
+        <p class="lead">QR menü ile sipariş verin, adisyonu takip edin, hesabı tek dokunuşta kapatın.</p>
+        <div class="cta-row">
+          <button type="button" class="btn btn-primary" id="btn-musteri">
+            <span class="btn-label">Müşteri Girişi</span>
+            <span class="btn-hint">QR Menü · Masa seç</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btn-kasa">
+            <span class="btn-label">Kasa Paneli</span>
+            <span class="btn-hint">Adisyon · Ödeme</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TABLE PICK ========== -->
+  <section id="screen-tables" class="screen" aria-label="Masa seçimi" hidden>
+    <header class="bar">
+      <button type="button" class="icon-btn" data-back="landing" aria-label="Geri">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="bar-text">
+        <p class="kicker">Müşteri</p>
+        <h2>Masanızı seçin</h2>
+      </div>
+    </header>
+    <div class="table-grid" id="customer-table-grid"></div>
+  </section>
+
+  <!-- ========== CUSTOMER ========== -->
+  <section id="screen-customer" class="screen" aria-label="QR Menü" hidden>
+    <header class="bar">
+      <button type="button" class="icon-btn" id="btn-customer-back" aria-label="Geri">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="bar-text">
+        <p class="kicker">QR Menü</p>
+        <h2>Masa <span id="customer-masa-no">1</span></h2>
+      </div>
+      <span class="pill" id="customer-masa-status">BOŞ</span>
+      <button type="button" class="icon-btn cart-toggle" id="btn-toggle-cart" aria-label="Sepet">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M6 6L5 3H2"/>
+        </svg>
+        <span class="badge" id="cart-badge">0</span>
+      </button>
+    </header>
+
+    <div class="split">
+      <div class="panel-main">
+        <div class="head">
+          <h3>Menü</h3>
+          <p>Ürüne dokunup sepete ekleyin</p>
+        </div>
+        <div class="menu-grid" id="menu-grid"></div>
+      </div>
+
+      <aside class="side-panel" id="cart-panel">
+        <div class="head">
+          <h3>Sepet</h3>
+          <p>Onaylanmamış sipariş</p>
+        </div>
+        <div class="item-list" id="cart-list"></div>
+        <div class="side-foot">
+          <div class="total">
+            <span>Sepet toplamı</span>
+            <strong id="cart-total">0 TL</strong>
+          </div>
+          <button type="button" class="btn btn-primary btn-fill" id="btn-confirm-order">Siparişi Onayla</button>
+          <button type="button" class="btn btn-ghost btn-fill" id="btn-clear-cart">Sepeti Temizle</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="adisyon-band" id="adisyon-strip" hidden>
+      <div class="head inline">
+        <h3>Mevcut Adisyon</h3>
+        <p id="adisyon-strip-total"></p>
+      </div>
+      <div class="chips" id="adisyon-chips"></div>
+    </div>
+  </section>
+
+  <!-- ========== CASHIER ========== -->
+  <section id="screen-cashier" class="screen" aria-label="Kasa paneli" hidden>
+    <header class="bar">
+      <button type="button" class="icon-btn" data-back="landing" aria-label="Geri">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="bar-text">
+        <p class="kicker">Kasa</p>
+        <h2>Masalar & Ödeme</h2>
+      </div>
+    </header>
+
+    <div class="split">
+      <div class="panel-main">
+        <div class="head">
+          <h3>Masa Durumları</h3>
+          <p>Doluluk ve tutar özeti</p>
+        </div>
+        <div class="table-grid cashier" id="cashier-table-grid"></div>
+      </div>
+
+      <aside class="side-panel" id="bill-panel">
+        <div class="head">
+          <h3 id="bill-title">Adisyon</h3>
+          <p id="bill-subtitle">Bir masa seçin</p>
+        </div>
+        <div class="item-list" id="bill-list">
+          <div class="empty"><p>Detay için dolu bir masa seçin.</p></div>
+        </div>
+        <div class="side-foot" id="bill-footer" hidden>
+          <div class="total">
+            <span>Genel toplam</span>
+            <strong id="bill-total">0 TL</strong>
+          </div>
+          <button type="button" class="btn btn-primary btn-fill" id="btn-close-bill">Hesabı Kapat</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ========== PAY MODAL ========== -->
+  <div class="modal" id="modal-pay" hidden>
+    <div class="modal-bg" data-close-modal></div>
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="pay-title">
+      <p class="kicker">Ödeme onayı</p>
+      <h3 id="pay-title">Hesabı kapat</h3>
+      <p class="modal-text" id="pay-lead"></p>
+      <div class="pay-amount" id="pay-total"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal>Vazgeç</button>
+        <button type="button" class="btn btn-primary" id="btn-pay-confirm">Ödemeyi Onayla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== QTY MODAL ========== -->
+  <div class="modal" id="modal-qty" hidden>
+    <div class="modal-bg" data-close-modal></div>
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="qty-title">
+      <p class="kicker">Sepete ekle</p>
+      <h3 id="qty-title">Ürün</h3>
+      <p class="modal-text" id="qty-price"></p>
+      <div class="qty">
+        <button type="button" class="qty-btn" id="qty-minus" aria-label="Azalt">−</button>
+        <input type="number" id="qty-input" min="1" value="1" inputmode="numeric" />
+        <button type="button" class="qty-btn" id="qty-plus" aria-label="Artır">+</button>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal>İptal</button>
+        <button type="button" class="btn btn-primary" id="btn-qty-add">Ekle</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toast-stack" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
