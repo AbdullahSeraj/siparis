@@ -1,4 +1,3 @@
-/* ========== Data — aynı iş kuralları (Python konsol projesi) ========== */
 const MENU = {
   U101: { ad: "Espresso", fiyat: 90, icon: "espresso" },
   U102: { ad: "Latte", fiyat: 130, icon: "latte" },
